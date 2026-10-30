@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import './App.css';
+import { API_BASE_URL } from './config/api';
 import AuthModal from './components/AuthModal';
 import TagSetupModal from './components/TagSetupModal';
 import NoteModal from './components/NoteModal';
@@ -68,7 +69,7 @@ export default function App() {
     setLoadingNotes(true);
     try {
       const userId = user.id || user._id;
-      const res = await fetch(`/api/notes?userId=${userId}`);
+      const res = await fetch(`${API_BASE_URL}/api/notes?userId=${userId}`);
       const data = await res.json();
       if (data.success) {
         setNotes(sortNotes(data.data || []));
@@ -122,7 +123,7 @@ export default function App() {
   // Ghim hoặc Bỏ ghim ghi chú
   const handleTogglePin = async (noteId) => {
     try {
-      const res = await fetch(`/api/notes/${noteId}/pin`, { method: 'PATCH' });
+      const res = await fetch(`${API_BASE_URL}/api/notes/${noteId}/pin`, { method: 'PATCH' });
       const data = await res.json();
       if (data.success) {
         setNotes((prev) =>
@@ -166,7 +167,7 @@ export default function App() {
 
     // Lưu vào database ngầm
     try {
-      await fetch(`/api/notes/${noteId}`, {
+      await fetch(`${API_BASE_URL}/api/notes/${noteId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: updatedContent })
@@ -181,7 +182,7 @@ export default function App() {
     if (!window.confirm('Bạn có chắc chắn muốn xóa ghi chú này không?')) return;
 
     try {
-      const res = await fetch(`/api/notes/${noteId}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE_URL}/api/notes/${noteId}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.success) {
         setNotes(notes.filter((n) => n._id !== noteId));

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE_URL } from '../config/api';
 
 export default function AuthModal({ onLoginSuccess }) {
   const [isRegister, setIsRegister] = useState(false);
@@ -17,7 +18,7 @@ export default function AuthModal({ onLoginSuccess }) {
     }
 
     setLoading(true);
-    const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
+    const endpoint = `${API_BASE_URL}${isRegister ? '/api/auth/register' : '/api/auth/login'}`;
 
     try {
       const res = await fetch(endpoint, {

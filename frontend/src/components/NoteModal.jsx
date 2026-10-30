@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config/api';
 
 export const NOTE_COLORS = [
   { name: 'Vàng kem', value: '#fef08a', textDark: true },
@@ -44,7 +45,7 @@ export default function NoteModal({
 
     setAiAnalyzing(true);
     try {
-      const res = await fetch('/api/ai/analyze-note', {
+      const res = await fetch(`${API_BASE_URL}/api/ai/analyze-note`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -121,7 +122,7 @@ export default function NoteModal({
     setLoading(true);
 
     try {
-      const url = isEditing ? `/api/notes/${existingNote._id}` : '/api/notes';
+      const url = `${API_BASE_URL}${isEditing ? `/api/notes/${existingNote._id}` : '/api/notes'}`;
       const method = isEditing ? 'PUT' : 'POST';
 
       const payload = {

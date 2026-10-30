@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE_URL } from '../config/api';
 
 const SUGGESTED_TAGS = [
   'Công việc',
@@ -48,7 +49,7 @@ export default function TagSetupModal({ user, onTagsSaved, isFirstTime = false, 
     setErrorMsg('');
 
     try {
-      const res = await fetch('/api/auth/tags', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/tags`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: user.id || user._id, tags })
